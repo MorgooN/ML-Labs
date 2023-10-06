@@ -9,22 +9,23 @@ import matplotlib.pyplot as plt
 import cv2
 import numpy as np
 
+
 # load image
-file = r'D:\Git\ML-Labs\dataTraining.png'
+file = r'D:\Git\ML-Labs\LAB_2_Images\dataTraining.png'
 test_im = cv2.imread(file,cv2.IMREAD_GRAYSCALE)
 
 # Format image
 img_resized = cv2.resize(test_im, (28,28), interpolation=cv2.INTER_LINEAR)
 img_resized = cv2.bitwise_not(img_resized)
-
+img_resized = tf.constant(img_resized, dtype=tf.float32) / 255
 
 (train_images, train_labels), (test_images, test_labels) = mnist.load_data()
 
-
-
+# minmax нормализация 
 train_images = tf.constant(train_images, dtype=tf.float32) / 255
 test_images = tf.constant(test_images, dtype=tf.float32) / 255
 
+ 
 # Преобразование меток классов в one-hot кодировку
 train_labels = to_categorical(train_labels)
 test_labels = to_categorical(test_labels)
@@ -80,8 +81,8 @@ print(f"Test accuracy: {test_acc}")
 
 sample_index = 25 # берём индекс конкретного примера из обучающего набора
 X_sample, y_sample = test_images[sample_index], test_labels[sample_index] # достаём из тестовго набора картинку и метку для него
-y_pred = model.predict(X_sample[None, :]) # делаем предсказание для данного примера.
-plt.imshow(X_sample) # рисуем картинку
+y_pred = model.predict(img_resized[None, :]) # делаем предсказание для данного примера.
+plt.imshow(img_resized) # рисуем картинку
 plt.show()
 
 np.set_printoptions(suppress=True) # чтобы вывод предсказаний y_pred был в понятном формате

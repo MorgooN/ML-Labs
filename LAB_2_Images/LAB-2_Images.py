@@ -1,14 +1,13 @@
 import tensorflow as tf
 
-from tensorflow.python.keras.layers import Dense, Flatten
+from keras.layers import Dense, Flatten
 from keras.datasets import mnist
-from tensorflow.python.keras import Model, Input
-from tensorflow.python.keras.callbacks import ModelCheckpoint
 from keras.utils import to_categorical
+from keras import Model, Input
+from keras.callbacks import ModelCheckpoint
 import matplotlib.pyplot as plt
 import cv2
 import numpy as np
-
 
 # load image
 file = r'D:\Git\ML-Labs\LAB_2_Images\dataTraining.png'
